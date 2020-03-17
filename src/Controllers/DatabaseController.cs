@@ -9,9 +9,9 @@ using Microsoft.Extensions.Options;
 using System.IO;
 using System.Data;
 using Dapper;
-using DapperSeries.Entities;
+using ToDoAPI.Entities;
 
-namespace DapperSeries.Controllers
+namespace ToDoAPI.Controllers
 {
     [Route("api/database")]
     public class DatabaseController : Controller

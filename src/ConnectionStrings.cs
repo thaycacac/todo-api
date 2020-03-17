@@ -1,6 +1,6 @@
 using System;
 
-namespace DapperSeries 
+namespace ToDoAPI
 {
     public class ConnectionStrings 
     {

@@ -5,13 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using System.IO;
 using System.Data;
 using Dapper;
-using DapperSeries.Entities;
+using ToDoAPI.Entities;
+using ToDoAPI.Ultil;
+using System.Diagnostics;
 
-namespace DapperSeries.Controllers
+namespace ToDoAPI.Controllers
 {
     [Route("api/task")]
     public class TaskController : Controller
@@ -25,88 +25,113 @@ namespace DapperSeries.Controllers
         
         //GET api/task
         [HttpGet]
-        public async Task<IEnumerable<TaskDTO>> Get(string model)
+        public async Task<IActionResult> Get(string model)
         {
-            IEnumerable<TaskDTO> listTask = Enumerable.Empty<TaskDTO>();
-
-            using (var connection = new SqlConnection(_connectionString))
+            try
             {
-                await connection.OpenAsync();
-                var query = @"SELECT * FROM Task";
-                listTask = await connection.QueryAsync<TaskDTO>(query);
+                IEnumerable<TaskEntities> listTask = Enumerable.Empty<TaskEntities>();
+
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    var query = @"SELECT * FROM Task";
+                    listTask = await connection.QueryAsync<TaskEntities>(query);
+                }
+                return Ok(new MessageAPI("S0001", listTask, "Get list task success!!!"));
+            } catch(Exception e)
+            {
+                return Ok(e.Message);
             }
-            return listTask;
+            
         }
+
 
 
         // GET api/task/1
         [HttpGet("{id}")]
-        public async Task<Entities.TaskDTO> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            Entities.TaskDTO task;
+            try
+            {
+                Entities.TaskEntities task;
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
                 var query = @"SELECT * FROM Task WHERE Id = @Id";
-                task = await connection.QuerySingleAsync<Entities.TaskDTO>(query, new {Id = id});
+                task = await connection.QuerySingleAsync<TaskEntities>(query, new {Id = id});
             }
-            return task;
+            return Ok(new MessageAPI("S0001", task, "Get task success!!!"));
+            }
+            catch (Exception e)
+            {
+                return Ok(e.Message);
+            }
         }
 
         // POST api/task
         [HttpPost()]
-        public async Task<IActionResult> Post([FromBody] Entities.TaskDTO model)
+        public async Task<IActionResult> Post([FromBody] TaskEntities model)
         {
-            int newAircraftId;
-            using (var connection = new SqlConnection(_connectionString))
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                var query = @"INSERT INTO Task (title, description, user)
-                    VALUES (@title, @description, @user)";
-                newAircraftId = await connection.ExecuteScalarAsync<int>(query, model);
+                var query = @"INSERT INTO Task (title, description, complete)
+                    VALUES (@title, @description, @complete)";
+                await connection.ExecuteScalarAsync<int>(query, model);
             }
-            return Ok(newAircraftId);
+            return Ok(new MessageAPI("S0001", null, "Create task success!!!"));
+            }
+            catch (Exception e)
+            {
+                return Ok(e.Message);
+            }
         }
 
         // PUT api/task/id
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] TaskDTO model)
+        public async Task<IActionResult> Put(int id, [FromBody] TaskEntities model)
         {
-            byte[] rowVersion;
-            if (id != model.Id) 
+            try
             {
-                return BadRequest();
-            }
-
-            using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
                 var query = @"UPDATE Task SET
-                    tilte = @title
-                    ,description = @description
-                    ,user = @user
-                    WHERE id = @id";
-                rowVersion = await connection.ExecuteScalarAsync<byte[]>(query, model);
+                    title = @title,
+                    description = @description,
+                    complete = @complete
+                    WHERE id = " + id;
+                await connection.ExecuteScalarAsync<int>(query, model);
             }
-
-            if (rowVersion == null) {
-                throw new DBConcurrencyException("The entity you were trying to edit has changed. Reload the entity and try again."); 
-            }
-            return Ok(rowVersion);
+            return Ok(new MessageAPI("S0001", null, "Update task success!!!"));
         }
+            catch (Exception e)
+            {
+                return Ok(e.Message);
+    }
+}
 
         // DELETE api/task/id
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-        
-            using (var connection = new SqlConnection(_connectionString))
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
                 var query = "DELETE Task WHERE id = @id";
                 await connection.ExecuteAsync(query, new {Id = id});
             }
-            return Ok();
+            return Ok(new MessageAPI("S0001", null, "Delete task success!!!"));
+            }
+            catch (Exception e)
+            {
+                return Ok(e.Message);
+            }
         }
+
     }
 }
