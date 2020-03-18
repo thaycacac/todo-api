@@ -11,14 +11,20 @@ The sample project for call api containing api controllers. To test the project 
 
 Edit server connection in **appsettings.json**
 
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Server=DESKTOP-G4NBSB1;Database=TODOLIST;ConnectRetryCount=0;Trusted_Connection=True;MultipleActiveResultSets=true"
+}
+```
+
 Call api example
 
-![example 1](https://github.io/thaycacac/todo-api/tree/master/src/1.png)
+![example 1](https://github.io/thaycacac/todo-api/blob/master/src/images/1.png?raw=true)
 
-![example 1](https://github.io/thaycacac/todo-api/tree/master/src/2.png)
+![example 1](https://github.io/thaycacac/todo-api/blob/master/src/images/2.png?raw=true)
 
-![example 1](https://github.io/thaycacac/todo-api/tree/master/src/3.png)
+![example 1](https://github.io/thaycacac/todo-api/blob/master/src/images/3.png?raw=true)
 
-![example 1](https://github.io/thaycacac/todo-api/tree/master/src/4.png)
+![example 1](https://github.io/thaycacac/todo-api/blob/master/src/images/4.png?raw=true)
 
-![example 1](https://github.io/thaycacac/todo-api/tree/master/src/5.png)
+![example 1](https://github.io/thaycacac/todo-api/blob/master/src/images/5.png?raw=true)
