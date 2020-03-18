@@ -19,12 +19,12 @@ Edit server connection in **appsettings.json**
 
 Call api example
 
-![example 1](https://github.io/thaycacac/todo-api/blob/master/src/images/1.png?raw=true)
+![example 1](https://github.io/thaycacac/todo-api/images/1.png)
 
-![example 1](https://github.io/thaycacac/todo-api/blob/master/src/images/2.png?raw=true)
+![example 2](https://github.io/thaycacac/todo-api/images/2.png)
 
-![example 1](https://github.io/thaycacac/todo-api/blob/master/src/images/3.png?raw=true)
+![example 3](https://github.io/thaycacac/todo-api/images/3.png)
 
-![example 1](https://github.io/thaycacac/todo-api/blob/master/src/images/4.png?raw=true)
+![example 4](https://github.io/thaycacac/todo-api/images/4.png)
 
-![example 1](https://github.io/thaycacac/todo-api/blob/master/src/images/5.png?raw=true)
+![example 5](https://github.io/thaycacac/todo-api/images/5.png)
