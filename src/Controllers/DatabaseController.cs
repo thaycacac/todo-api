@@ -10,6 +10,7 @@ using System.IO;
 using System.Data;
 using Dapper;
 using ToDoAPI.Entities;
+using ToDoAPI.Ultil;
 
 namespace ToDoAPI.Controllers
 {
@@ -38,8 +39,6 @@ namespace ToDoAPI.Controllers
                         DROP DATABASE [{0}]
                         CREATE DATABASE [{0}]", databaseToCreate);
                 await command.ExecuteNonQueryAsync();
-
-
             }
 
             using (var connection = new SqlConnection(_connectionString))
@@ -50,7 +49,7 @@ namespace ToDoAPI.Controllers
                 createTablesCommand.CommandText = System.IO.File.ReadAllText("./Scripts/CreateTables.sql");
                 await createTablesCommand.ExecuteNonQueryAsync();
             }
-            return Ok();
+            return Ok(new MessageAPI("S0001", null, "Init database success!!!"));
         }
     }
 }
