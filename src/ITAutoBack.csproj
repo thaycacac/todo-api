@@ -1,16 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <StartupObject>ToDoAPI.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
-  </ItemGroup>
-
-  
-  <ItemGroup>
-    <Content Include="Scripts\*.sql" CopyToPublishDirectory="Always" />
   </ItemGroup>
 
   <ItemGroup>
